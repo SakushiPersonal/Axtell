@@ -27,6 +27,8 @@ export interface Property {
   };
   views: number;
   favorites: number;
+  availableVisitDays: string[]; // ['monday', 'tuesday', etc.]
+  availableVisitHours: string[]; // ['09:00', '10:00', etc.]
   createdAt: string;
   updatedAt: string;
 }
@@ -40,6 +42,36 @@ export interface User {
   createdAt: string;
 }
 
+export interface VisitRequest {
+  id: string;
+  propertyId: string;
+  propertyTitle: string;
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string;
+  requestedDate: string;
+  requestedTime: string;
+  message?: string;
+  status: 'pending' | 'confirmed' | 'cancelled';
+  createdAt: string;
+}
+
+export interface AppraisalRequest {
+  id: string;
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string;
+  propertyType: string;
+  propertyAddress: string;
+  propertyArea?: number;
+  propertyBedrooms?: number;
+  propertyBathrooms?: number;
+  propertyDescription: string;
+  preferredContactMethod: 'email' | 'phone';
+  status: 'pending' | 'in-progress' | 'completed';
+  createdAt: string;
+}
+
 export interface Analytics {
   totalViews: number;
   totalProperties: number;
@@ -48,6 +80,8 @@ export interface Analytics {
   popularNeighborhoods: { name: string; views: number; searches: number }[];
   monthlyStats: { month: string; views: number; inquiries: number }[];
   propertyTypes: { type: string; count: number; percentage: number }[];
+  recentVisits: VisitRequest[];
+  pendingAppraisals: AppraisalRequest[];
 }
 
 export interface SearchFilters {

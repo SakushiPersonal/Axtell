@@ -2,22 +2,27 @@ import React, { useState } from 'react';
 import { Property } from '../../types';
 import { 
   MapPin, Bed, Bath, Square, ArrowLeft, Heart, Share2, 
-  Phone, Mail, Calendar, Camera, CheckCircle
+  Phone, Mail, Calendar, Camera, CheckCircle, MessageCircle
 } from 'lucide-react';
 
 interface PropertyDetailsProps {
   property: Property;
   onBack: () => void;
+  onScheduleVisit?: (property: Property) => void;
 }
 
-const PropertyDetails: React.FC<PropertyDetailsProps> = ({ property, onBack }) => {
+const PropertyDetails: React.FC<PropertyDetailsProps> = ({ 
+  property, 
+  onBack, 
+  onScheduleVisit 
+}) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-AR', {
+    return new Intl.NumberFormat('es-CL', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'CLP',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
@@ -40,6 +45,13 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ property, onBack }) =
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + property.images.length) % property.images.length);
+  };
+
+  const handleWhatsAppContact = () => {
+    const phone = property.agent.phone.replace(/\D/g, ''); // Remove non-digits
+    const message = encodeURIComponent(`Hola! Me interesa la propiedad: ${property.title}`);
+    const whatsappUrl = `https://wa.me/${phone}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -228,6 +240,13 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ property, onBack }) =
                     <Phone className="h-4 w-4 mr-2" />
                     Llamar
                   </a>
+                  <button
+                    onClick={handleWhatsAppContact}
+                    className="flex items-center justify-center w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                  >
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    WhatsApp
+                  </button>
                   <a
                     href={`mailto:${property.agent.email}`}
                     className="flex items-center justify-center w-full px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition-colors"
@@ -235,10 +254,15 @@ const PropertyDetails: React.FC<PropertyDetailsProps> = ({ property, onBack }) =
                     <Mail className="h-4 w-4 mr-2" />
                     Email
                   </a>
-                  <button className="flex items-center justify-center w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors">
-                    <Calendar className="h-4 w-4 mr-2" />
-                    Agendar Visita
-                  </button>
+                  {onScheduleVisit && (
+                    <button 
+                      onClick={() => onScheduleVisit(property)}
+                      className="flex items-center justify-center w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                    >
+                      <Calendar className="h-4 w-4 mr-2" />
+                      Agendar Visita
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

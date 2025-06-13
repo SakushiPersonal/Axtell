@@ -2,21 +2,21 @@ import React, { useState, useMemo } from 'react';
 import PropertyCard from '../components/Property/PropertyCard';
 import PropertyFilters from '../components/Property/PropertyFilters';
 import { Property, SearchFilters } from '../types';
-import { mockProperties } from '../data/mockData';
 import { Grid, List, SortAsc } from 'lucide-react';
 
 interface PropertiesPageProps {
+  properties: Property[];
   onViewProperty: (property: Property) => void;
 }
 
-const PropertiesPage: React.FC<PropertiesPageProps> = ({ onViewProperty }) => {
+const PropertiesPage: React.FC<PropertiesPageProps> = ({ properties, onViewProperty }) => {
   const [filters, setFilters] = useState<SearchFilters>({});
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | 'date' | 'area'>('date');
   const [favorites, setFavorites] = useState<string[]>([]);
 
   const filteredProperties = useMemo(() => {
-    let filtered = mockProperties.filter(property => {
+    let filtered = properties.filter(property => {
       if (filters.type && property.type !== filters.type) return false;
       if (filters.status && property.status !== filters.status) return false;
       if (filters.minPrice && property.price < filters.minPrice) return false;
@@ -47,7 +47,7 @@ const PropertiesPage: React.FC<PropertiesPageProps> = ({ onViewProperty }) => {
     });
 
     return filtered;
-  }, [filters, sortBy]);
+  }, [properties, filters, sortBy]);
 
   const clearFilters = () => {
     setFilters({});
@@ -74,7 +74,7 @@ const PropertiesPage: React.FC<PropertiesPageProps> = ({ onViewProperty }) => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Propiedades Disponibles</h1>
           <p className="text-gray-600">
-            Encuentra la propiedad perfecta entre nuestro catálogo de {mockProperties.length} inmuebles
+            Encuentra la propiedad perfecta entre nuestro catálogo de {properties.length} inmuebles
           </p>
         </div>
 

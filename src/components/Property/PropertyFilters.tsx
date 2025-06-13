@@ -30,19 +30,19 @@ const PropertyFilters: React.FC<PropertyFiltersProps> = ({
 
   const cities = [
     { value: '', label: 'Todas las ciudades' },
-    { value: 'Ciudad Capital', label: 'Ciudad Capital' },
-    { value: 'Zona Norte', label: 'Zona Norte' },
-    { value: 'Zona Sur', label: 'Zona Sur' }
+    { value: 'Santiago', label: 'Santiago' },
+    { value: 'Valparaíso', label: 'Valparaíso' },
+    { value: 'Concepción', label: 'Concepción' }
   ];
 
   const neighborhoods = [
     { value: '', label: 'Todos los barrios' },
-    { value: 'Las Flores', label: 'Las Flores' },
+    { value: 'Las Condes', label: 'Las Condes' },
     { value: 'Centro', label: 'Centro' },
-    { value: 'Los Olivos', label: 'Los Olivos' },
-    { value: 'Microcentro', label: 'Microcentro' },
-    { value: 'Centro Comercial', label: 'Centro Comercial' },
-    { value: 'Zona Industrial', label: 'Zona Industrial' }
+    { value: 'Ñuñoa', label: 'Ñuñoa' },
+    { value: 'Providencia', label: 'Providencia' },
+    { value: 'Santiago Centro', label: 'Santiago Centro' },
+    { value: 'Maipú', label: 'Maipú' }
   ];
 
   const hasActiveFilters = Object.values(filters).some(value => 
@@ -123,7 +123,7 @@ const PropertyFilters: React.FC<PropertyFiltersProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Precio Mínimo</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Precio Mínimo (CLP)</label>
           <input
             type="number"
             placeholder="0"
@@ -134,7 +134,7 @@ const PropertyFilters: React.FC<PropertyFiltersProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Precio Máximo</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Precio Máximo (CLP)</label>
           <input
             type="number"
             placeholder="Sin límite"

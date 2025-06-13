@@ -1,22 +1,33 @@
 import React from 'react';
 import { Search, TrendingUp, Award, Users, MapPin, Home as HomeIcon } from 'lucide-react';
 import PropertyCard from '../components/Property/PropertyCard';
-import { mockProperties } from '../data/mockData';
 import { Property } from '../types';
 
 interface HomePageProps {
+  properties: Property[];
   onViewProperty: (property: Property) => void;
   onSearchProperties: () => void;
+  onRequestAppraisal: () => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onViewProperty, onSearchProperties }) => {
-  const featuredProperties = mockProperties.slice(0, 3);
+const HomePage: React.FC<HomePageProps> = ({ 
+  properties, 
+  onViewProperty, 
+  onSearchProperties, 
+  onRequestAppraisal 
+}) => {
+  const featuredProperties = properties
+    .sort((a, b) => b.views - a.views)
+    .slice(0, 3);
+
+  const totalViews = properties.reduce((sum, property) => sum + property.views, 0);
+  const totalFavorites = properties.reduce((sum, property) => sum + property.favorites, 0);
 
   const stats = [
-    { icon: HomeIcon, value: '500+', label: 'Propiedades' },
+    { icon: HomeIcon, value: `${properties.length}+`, label: 'Propiedades' },
     { icon: Users, value: '1,200+', label: 'Clientes Satisfechos' },
     { icon: Award, value: '15+', label: 'Años de Experiencia' },
-    { icon: TrendingUp, value: '98%', label: 'Éxito en Ventas' }
+    { icon: TrendingUp, value: `${totalViews}+`, label: 'Visualizaciones' }
   ];
 
   const features = [
@@ -64,7 +75,10 @@ const HomePage: React.FC<HomePageProps> = ({ onViewProperty, onSearchProperties 
               >
                 Ver Propiedades
               </button>
-              <button className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg hover:bg-white hover:text-red-900 transition-colors text-lg font-semibold">
+              <button 
+                onClick={onRequestAppraisal}
+                className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg hover:bg-white hover:text-red-900 transition-colors text-lg font-semibold"
+              >
                 Solicitar Tasación
               </button>
             </div>
@@ -164,7 +178,10 @@ const HomePage: React.FC<HomePageProps> = ({ onViewProperty, onSearchProperties 
             <button className="px-8 py-3 bg-white text-red-900 rounded-lg hover:bg-gray-100 transition-colors font-semibold">
               Contactar Ahora
             </button>
-            <button className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-red-900 transition-colors font-semibold">
+            <button 
+              onClick={onRequestAppraisal}
+              className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-red-900 transition-colors font-semibold"
+            >
               Solicitar Llamada
             </button>
           </div>

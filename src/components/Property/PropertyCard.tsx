@@ -16,9 +16,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   isFavorite = false
 }) => {
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-AR', {
+    return new Intl.NumberFormat('es-CL', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'CLP',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
