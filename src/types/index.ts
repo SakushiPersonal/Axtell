@@ -42,6 +42,23 @@ export interface User {
   createdAt: string;
 }
 
+export interface Client {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  address?: string;
+  city: string;
+  interests?: string;
+  budget?: number;
+  propertyType: string;
+  notes?: string;
+  status: 'new' | 'contacted' | 'interested' | 'closed';
+  assignedTo?: string; // ID del agente asignado
+  createdAt: string;
+  lastContact?: string;
+}
+
 export interface VisitRequest {
   id: string;
   propertyId: string;

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Search, Info, LogIn, LogOut, User, Settings } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { Home, Search, Info, User } from 'lucide-react';
 
 interface NavbarProps {
   currentPage: string;
@@ -8,9 +7,6 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentPage, onPageChange }) => {
-  const { user, logout, isAdmin } = useAuth();
-  const [showUserMenu, setShowUserMenu] = useState(false);
-
   const navItems = [
     { id: 'home', label: 'Inicio', icon: Home },
     { id: 'properties', label: 'Propiedades', icon: Search },
@@ -53,59 +49,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onPageChange }) => {
             })}
           </div>
 
-          {/* User Menu */}
+          {/* Contact Info */}
           <div className="flex items-center space-x-4">
-            {user ? (
-              <div className="relative">
-                <button
-                  onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex items-center space-x-2 text-gray-700 hover:text-red-600 transition-colors duration-200"
-                >
-                  <User className="h-5 w-5" />
-                  <span className="hidden md:block">{user.name}</span>
-                </button>
-                
-                {showUserMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                    <div className="px-4 py-2 text-sm text-gray-700 border-b">
-                      <div className="font-medium">{user.name}</div>
-                      <div className="text-gray-500">{user.email}</div>
-                    </div>
-                    {isAdmin && (
-                      <button
-                        onClick={() => {
-                          onPageChange('admin');
-                          setShowUserMenu(false);
-                        }}
-                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <Settings className="h-4 w-4 mr-2" />
-                        Panel Admin
-                      </button>
-                    )}
-                    <button
-                      onClick={() => {
-                        logout();
-                        setShowUserMenu(false);
-                        onPageChange('home');
-                      }}
-                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Cerrar Sesión
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <button
-                onClick={() => onPageChange('login')}
-                className="flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-200"
-              >
-                <LogIn className="h-4 w-4 mr-2" />
-                Iniciar Sesión
-              </button>
-            )}
+            <div className="hidden lg:flex items-center text-sm text-gray-600">
+              <span className="mr-4">📞 +56 9 1234 5678</span>
+              <span>✉️ info@axtellpropiedades.com</span>
+            </div>
           </div>
         </div>
       </div>

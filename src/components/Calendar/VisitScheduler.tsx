@@ -39,7 +39,7 @@ const VisitScheduler: React.FC<VisitSchedulerProps> = ({ property, onClose, onSc
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       
-      const dayName = date.toLocaleDateString('en-US', { weekday: 'lowercase' });
+      const dayName = date.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
       
       if (property.availableVisitDays.includes(dayName)) {
         dates.push({

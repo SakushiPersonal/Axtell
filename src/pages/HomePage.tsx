@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, TrendingUp, Award, Users, MapPin, Home as HomeIcon } from 'lucide-react';
+import { Search, TrendingUp, Award, Users, MapPin, Home as HomeIcon, UserPlus } from 'lucide-react';
 import PropertyCard from '../components/Property/PropertyCard';
 import { Property } from '../types';
 
@@ -8,13 +8,15 @@ interface HomePageProps {
   onViewProperty: (property: Property) => void;
   onSearchProperties: () => void;
   onRequestAppraisal: () => void;
+  onRegisterClient: () => void;
 }
 
 const HomePage: React.FC<HomePageProps> = ({ 
   properties, 
   onViewProperty, 
   onSearchProperties, 
-  onRequestAppraisal 
+  onRequestAppraisal,
+  onRegisterClient
 }) => {
   const featuredProperties = properties
     .sort((a, b) => b.views - a.views)
@@ -76,10 +78,11 @@ const HomePage: React.FC<HomePageProps> = ({
                 Ver Propiedades
               </button>
               <button 
-                onClick={onRequestAppraisal}
-                className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg hover:bg-white hover:text-red-900 transition-colors text-lg font-semibold"
+                onClick={onRegisterClient}
+                className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg hover:bg-white hover:text-red-900 transition-colors text-lg font-semibold flex items-center justify-center"
               >
-                Solicitar Tasación
+                <UserPlus className="h-5 w-5 mr-2" />
+                Registrarme como Cliente
               </button>
             </div>
           </div>
@@ -175,14 +178,18 @@ const HomePage: React.FC<HomePageProps> = ({
             Nuestro equipo de expertos está aquí para ayudarte en cada paso del camino
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 bg-white text-red-900 rounded-lg hover:bg-gray-100 transition-colors font-semibold">
-              Contactar Ahora
+            <button 
+              onClick={onRegisterClient}
+              className="px-8 py-3 bg-white text-red-900 rounded-lg hover:bg-gray-100 transition-colors font-semibold flex items-center justify-center"
+            >
+              <UserPlus className="h-5 w-5 mr-2" />
+              Registrarme como Cliente
             </button>
             <button 
               onClick={onRequestAppraisal}
               className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-red-900 transition-colors font-semibold"
             >
-              Solicitar Llamada
+              Solicitar Tasación
             </button>
           </div>
         </div>

@@ -152,8 +152,6 @@ const PropertiesPage: React.FC<PropertiesPageProps> = ({ properties, onViewPrope
                 key={property.id}
                 property={property}
                 onViewDetails={onViewProperty}
-                onToggleFavorite={toggleFavorite}
-                isFavorite={favorites.includes(property.id)}
               />
             ))}
           </div>

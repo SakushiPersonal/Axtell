@@ -1,4 +1,4 @@
-import { Property, User, Analytics, VisitRequest, AppraisalRequest } from '../types';
+import { Property, User, Analytics, VisitRequest, AppraisalRequest, Client } from '../types';
 
 export const mockProperties: Property[] = [
   {
@@ -17,7 +17,7 @@ export const mockProperties: Property[] = [
       neighborhood: 'Las Condes',
       coordinates: { lat: -33.4489, lng: -70.6693 }
     },
-    features: ['Jardín', 'Garaje', 'Piscina', 'Seguridad 24h', 'Cocina equipada'],
+    features: ['Jardín', 'Garaje', 'Piscina', 'Seguridad 24h', 'Cocina equipada', 'Calefacción central', 'Aire acondicionado', 'Terraza', 'Bodega', 'Lavadero', 'Quincho', 'Sala de estar'],
     images: [
       'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800',
       'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -29,8 +29,8 @@ export const mockProperties: Property[] = [
       phone: '+56 9 1234 5678',
       email: 'maria@axtellpropiedades.com'
     },
-    views: 156,
-    favorites: 23,
+    views: 0,
+    favorites: 0,
     availableVisitDays: ['monday', 'tuesday', 'wednesday', 'friday'],
     availableVisitHours: ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'],
     createdAt: '2024-01-15',
@@ -52,7 +52,7 @@ export const mockProperties: Property[] = [
       neighborhood: 'Centro',
       coordinates: { lat: -33.4372, lng: -70.6506 }
     },
-    features: ['Balcón', 'Portero eléctrico', 'Ascensor', 'Calefacción central'],
+    features: ['Balcón', 'Portero eléctrico', 'Ascensor', 'Calefacción central', 'Vista panorámica', 'Cocina americana', 'Closets empotrados', 'Piso flotante'],
     images: [
       'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800',
       'https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg?auto=compress&cs=tinysrgb&w=800'
@@ -63,8 +63,8 @@ export const mockProperties: Property[] = [
       phone: '+56 9 2345 6789',
       email: 'carlos@axtellpropiedades.com'
     },
-    views: 89,
-    favorites: 12,
+    views: 0,
+    favorites: 0,
     availableVisitDays: ['tuesday', 'thursday', 'saturday'],
     availableVisitHours: ['10:00', '11:00', '15:00', '16:00', '17:00'],
     createdAt: '2024-01-18',
@@ -84,7 +84,7 @@ export const mockProperties: Property[] = [
       neighborhood: 'Maipú',
       coordinates: { lat: -33.5110, lng: -70.7580 }
     },
-    features: ['Esquina', 'Agua corriente', 'Energía eléctrica', 'Gas natural', 'Cloacas'],
+    features: ['Esquina', 'Agua corriente', 'Energía eléctrica', 'Gas natural', 'Cloacas', 'Acceso pavimentado', 'Zona comercial', 'Transporte público', 'Cerca de colegios', 'Supermercados cercanos'],
     images: [
       'https://images.pexels.com/photos/2402235/pexels-photo-2402235.jpeg?auto=compress&cs=tinysrgb&w=800'
     ],
@@ -94,8 +94,8 @@ export const mockProperties: Property[] = [
       phone: '+56 9 1234 5678',
       email: 'maria@axtellpropiedades.com'
     },
-    views: 67,
-    favorites: 8,
+    views: 0,
+    favorites: 0,
     availableVisitDays: ['monday', 'wednesday', 'friday'],
     availableVisitHours: ['09:00', '10:00', '14:00', '15:00'],
     createdAt: '2024-01-10',
@@ -116,7 +116,7 @@ export const mockProperties: Property[] = [
       neighborhood: 'Providencia',
       coordinates: { lat: -33.4255, lng: -70.6110 }
     },
-    features: ['Aire acondicionado', 'Internet fibra óptica', 'Estacionamiento', 'Seguridad', 'Recepción'],
+    features: ['Aire acondicionado', 'Internet fibra óptica', 'Estacionamiento', 'Seguridad', 'Recepción', 'Sala de reuniones', 'Cocina', 'Vista panorámica', 'Ascensores', 'Generador eléctrico'],
     images: [
       'https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?auto=compress&cs=tinysrgb&w=800',
       'https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=800'
@@ -127,8 +127,8 @@ export const mockProperties: Property[] = [
       phone: '+56 9 2345 6789',
       email: 'carlos@axtellpropiedades.com'
     },
-    views: 45,
-    favorites: 5,
+    views: 0,
+    favorites: 0,
     availableVisitDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
     availableVisitHours: ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'],
     createdAt: '2024-01-25',
@@ -150,7 +150,7 @@ export const mockProperties: Property[] = [
       neighborhood: 'Ñuñoa',
       coordinates: { lat: -33.4569, lng: -70.5987 }
     },
-    features: ['Piscina', 'Parrilla', 'Garaje', 'Jardín amplio', 'Cocina equipada', 'Lavadero'],
+    features: ['Piscina', 'Parrilla', 'Garaje', 'Jardín amplio', 'Cocina equipada', 'Lavadero', 'Sala de estar', 'Comedor', 'Terraza', 'Bodega', 'Calefacción', 'Alarma'],
     images: [
       'https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&w=800',
       'https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -162,8 +162,8 @@ export const mockProperties: Property[] = [
       phone: '+56 9 1234 5678',
       email: 'maria@axtellpropiedades.com'
     },
-    views: 134,
-    favorites: 18,
+    views: 0,
+    favorites: 0,
     availableVisitDays: ['saturday', 'sunday'],
     availableVisitHours: ['10:00', '11:00', '15:00', '16:00'],
     createdAt: '2024-01-12',
@@ -184,7 +184,7 @@ export const mockProperties: Property[] = [
       neighborhood: 'Santiago Centro',
       coordinates: { lat: -33.4378, lng: -70.6504 }
     },
-    features: ['Gran vidriera', 'Depósito', 'Aire acondicionado', 'Alarma', 'Acceso para discapacitados'],
+    features: ['Gran vidriera', 'Depósito', 'Aire acondicionado', 'Alarma', 'Acceso para discapacitados', 'Baño', 'Oficina', 'Estacionamiento', 'Zona peatonal', 'Transporte público'],
     images: [
       'https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=800'
     ],
@@ -194,8 +194,8 @@ export const mockProperties: Property[] = [
       phone: '+56 9 2345 6789',
       email: 'carlos@axtellpropiedades.com'
     },
-    views: 78,
-    favorites: 9,
+    views: 0,
+    favorites: 0,
     availableVisitDays: ['monday', 'wednesday', 'friday'],
     availableVisitHours: ['09:00', '10:00', '11:00', '14:00', '15:00'],
     createdAt: '2024-01-20',
@@ -205,27 +205,88 @@ export const mockProperties: Property[] = [
 
 export const mockUsers: User[] = [
   {
+    id: 'admin1',
+    name: 'Administrador Principal',
+    email: 'admin@axtellpropiedades.com',
+    role: 'admin',
+    phone: '+56 9 1111 1111',
+    createdAt: '2024-01-01'
+  },
+  {
+    id: 'admin2',
+    name: 'María González',
+    email: 'maria@axtellpropiedades.com',
+    role: 'admin',
+    phone: '+56 9 1234 5678',
+    createdAt: '2024-01-05'
+  },
+  {
+    id: 'admin3',
+    name: 'Carlos Rodríguez',
+    email: 'carlos@axtellpropiedades.com',
+    role: 'admin',
+    phone: '+56 9 2345 6789',
+    createdAt: '2024-01-10'
+  }
+];
+
+export const mockClients: Client[] = [
+  {
     id: '1',
     name: 'Juan Pérez',
     email: 'juan@email.com',
-    role: 'client',
     phone: '+56 9 9876 5432',
+    address: 'Los Aromos 123',
+    city: 'Santiago',
+    interests: 'Casa con jardín, cerca de colegios',
+    budget: 200000000,
+    propertyType: 'casa',
+    notes: 'Busca casa para familia con 2 hijos',
+    status: 'new',
     createdAt: '2024-01-10'
   },
   {
     id: '2',
     name: 'Ana López',
     email: 'ana@email.com',
-    role: 'client',
     phone: '+56 9 8765 4321',
-    createdAt: '2024-01-15'
+    city: 'Santiago',
+    interests: 'Departamento céntrico, buena conectividad',
+    budget: 150000000,
+    propertyType: 'apartamento',
+    notes: 'Primera vivienda, trabajo en el centro',
+    status: 'contacted',
+    assignedTo: 'admin2',
+    createdAt: '2024-01-15',
+    lastContact: '2024-01-20'
   },
   {
-    id: 'admin1',
-    name: 'Administrador',
-    email: 'admin@axtellpropiedades.com',
-    role: 'admin',
-    createdAt: '2024-01-01'
+    id: '3',
+    name: 'Roberto Silva',
+    email: 'roberto@email.com',
+    phone: '+56 9 7654 3210',
+    city: 'Santiago',
+    interests: 'Terreno para inversión',
+    budget: 300000000,
+    propertyType: 'terreno',
+    notes: 'Inversionista, busca terrenos comerciales',
+    status: 'interested',
+    assignedTo: 'admin3',
+    createdAt: '2024-01-20',
+    lastContact: '2024-01-25'
+  },
+  {
+    id: '4',
+    name: 'Carmen Torres',
+    email: 'carmen@email.com',
+    phone: '+56 9 6543 2109',
+    city: 'Santiago',
+    interests: 'Local comercial para negocio',
+    budget: 80000000,
+    propertyType: 'comercial',
+    notes: 'Quiere abrir una tienda de ropa',
+    status: 'new',
+    createdAt: '2024-01-25'
   }
 ];
 
@@ -291,20 +352,20 @@ export const mockAppraisalRequests: AppraisalRequest[] = [
 ];
 
 export const mockAnalytics: Analytics = {
-  totalViews: 569,
+  totalViews: 0,
   totalProperties: 6,
-  totalClients: 2,
+  totalClients: 4,
   mostViewedProperties: mockProperties.sort((a, b) => b.views - a.views).slice(0, 3),
   popularNeighborhoods: [
-    { name: 'Las Condes', views: 156, searches: 45 },
-    { name: 'Ñuñoa', views: 134, searches: 38 },
-    { name: 'Centro', views: 89, searches: 32 },
-    { name: 'Providencia', views: 78, searches: 25 },
-    { name: 'Santiago Centro', views: 67, searches: 18 }
+    { name: 'Las Condes', views: 0, searches: 45 },
+    { name: 'Ñuñoa', views: 0, searches: 38 },
+    { name: 'Centro', views: 0, searches: 32 },
+    { name: 'Providencia', views: 0, searches: 25 },
+    { name: 'Santiago Centro', views: 0, searches: 18 }
   ],
   monthlyStats: [
-    { month: 'Enero', views: 320, inquiries: 45 },
-    { month: 'Febrero', views: 249, inquiries: 38 },
+    { month: 'Enero', views: 0, inquiries: 45 },
+    { month: 'Febrero', views: 0, inquiries: 38 },
     { month: 'Marzo', views: 0, inquiries: 0 }
   ],
   propertyTypes: [
