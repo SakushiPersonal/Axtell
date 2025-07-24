@@ -37,12 +37,11 @@ export default function AdminVisits() {
 
   const handleStatusUpdate = async (visitId: string, newStatus: Visit['status']) => {
     try {
-      console.log(`🔄 Actualizando visita ${visitId} a estado: ${newStatus}`);
       await updateVisit(visitId, { status: newStatus });
       setEditingVisit(null);
-      console.log(`✅ Visita actualizada exitosamente`);
+
     } catch (error) {
-      console.error('❌ Error al actualizar visita:', error);
+      console.error('Error al actualizar visita:', error);
       alert('Error al actualizar el estado de la visita. Por favor, inténtalo de nuevo.');
     }
   };

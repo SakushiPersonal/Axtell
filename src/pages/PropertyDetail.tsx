@@ -80,9 +80,9 @@ export default function PropertyDetail() {
         message: ''
       });
       
-      console.log('✅ Visita enviada exitosamente');
+      
     } catch (error) {
-      console.error('❌ Error enviando visita:', error);
+              console.error('Error enviando visita:', error);
       alert('Error al enviar la solicitud de visita. Por favor, inténtalo de nuevo.');
     } finally {
       setIsSubmittingVisit(false);

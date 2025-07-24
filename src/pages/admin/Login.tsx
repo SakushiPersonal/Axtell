@@ -4,8 +4,6 @@ import { LogIn, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function AdminLogin() {
-  console.log('🔑 AdminLogin component renderizado');
-  
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -15,8 +13,6 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   
   const { user, signIn, loading } = useAuth();
-  
-  console.log('🔑 Estado del Login - user:', !!user, 'loading:', loading);
 
   // Redirigir si ya está autenticado
   useEffect(() => {
@@ -26,18 +22,12 @@ export default function AdminLogin() {
   }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log('🚀 handleSubmit ejecutado');
     e.preventDefault();
     setError('');
-    console.log('🚀 Formulario enviado con:', formData);
-    console.log('🚀 Estado loading antes de signIn:', loading);
 
     try {
       const result = await signIn(formData.email, formData.password);
-      console.log('Resultado del signIn:', result);
-      
       if (result.success) {
-        console.log('Login exitoso, navegando al dashboard');
         navigate('/admin/dashboard');
       } else {
         console.error('Error en login:', result.error);

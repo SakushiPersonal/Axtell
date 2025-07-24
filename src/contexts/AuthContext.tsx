@@ -26,20 +26,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const initializingRef = useRef(true);
   const creatingUserRef = useRef(false); // Bandera para prevenir cambios de sesión durante creación
 
-  console.log('🚀 AuthProvider - loading:', loading, 'user:', !!user, 'session:', !!session);
-
   const loadUserProfile = async (userId: string) => {
     try {
-      console.log('👤 Iniciando carga de perfil para:', userId);
-      
       const profile = await profileService.getById(userId);
       
       if (profile) {
-        console.log('✅ Perfil encontrado y cargado:', profile.name, profile.role);
-        
         // Verificar si el usuario está activo
         if (!profile.is_active) {
-          console.log('⚠️ Usuario inactivo detectado, cerrando sesión');
           await signOut();
           throw new Error('Tu cuenta está inactiva. Contacta al administrador.');
         }
@@ -108,7 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setSession(null);
         setUser(null);
       } finally {
-        console.log('🏁 Inicialización completada - setting loading to false');
+    
         setLoading(false);
         initializingRef.current = false;
       }

@@ -12,7 +12,6 @@ export default function AdminClients() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 🎯 NUEVA ESTRUCTURA SIMPLE
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -55,7 +54,6 @@ export default function AdminClients() {
     setIsSubmitting(true);
 
     try {
-      // 🎯 MAPEO DIRECTO DE LA NUEVA ESTRUCTURA
       const clientData = {
         name: formData.name,
         email: formData.email,
@@ -110,7 +108,6 @@ export default function AdminClients() {
     setShowForm(false);
   };
 
-  // 🎯 NUEVA FUNCIÓN handleEdit SIMPLIFICADA
   const handleEdit = (client: Client) => {
     setFormData({
       name: client.name,
@@ -338,9 +335,8 @@ export default function AdminClients() {
                   </div>
                 </div>
 
-                {/* 🎯 NUEVA ESTRUCTURA SIMPLE */}
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                  <h4 className="text-sm font-semibold text-blue-800 mb-3">🎯 Criterios de Búsqueda (Para Notificaciones Automáticas)</h4>
+                  <h4 className="text-sm font-semibold text-blue-800 mb-3">Criterios de Búsqueda (Para Notificaciones Automáticas)</h4>
                   
                   {/* Tipo de operación */}
                   <div className="mb-4">

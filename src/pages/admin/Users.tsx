@@ -50,8 +50,6 @@ export default function AdminUsers() {
       // Para creación, manejar directamente con createUserAsAdmin
       setIsCreating(true);
       try {
-        console.log('🚀 Iniciando creación de usuario desde componente...');
-        
         const result = await createUserAsAdmin(
           formData.email,
           formData.password,
@@ -63,17 +61,14 @@ export default function AdminUsers() {
         );
 
         if (result.success) {
-          console.log('✅ Usuario creado exitosamente');
           alert('Usuario creado exitosamente');
           resetForm();
-          // Refrescar la lista de usuarios para mostrar el nuevo usuario
           await refreshUsers();
         } else {
-          console.error('❌ Error creando usuario:', result.error);
           alert(`Error creando usuario: ${result.error?.message || 'Error desconocido'}`);
         }
       } catch (error) {
-        console.error('❌ Error general creando usuario:', error);
+        console.error('Error general creando usuario:', error);
         alert(`Error: ${error instanceof Error ? error.message : 'Error desconocido'}`);
       } finally {
         setIsCreating(false);

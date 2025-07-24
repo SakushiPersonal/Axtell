@@ -24,14 +24,10 @@ export function WhatsAppProvider({ children }: { children: React.ReactNode }) {
   const refreshMessages = async () => {
     try {
       setLoading(true);
-      console.log('📱 Cargando mensajes desde la base de datos...');
-      
       const data = await whatsappMessageService.getAll();
       setMessages(data);
-      
-      console.log(`✅ ${data.length} mensajes cargados`);
     } catch (error) {
-      console.error('❌ Error cargando mensajes de WhatsApp:', error);
+      console.error('Error cargando mensajes de WhatsApp:', error);
     } finally {
       setLoading(false);
     }
@@ -52,30 +48,21 @@ export function WhatsAppProvider({ children }: { children: React.ReactNode }) {
   // Acciones
   const sendMessage = async (message: WhatsAppMessage) => {
     try {
-      // Abrir WhatsApp
       window.open(message.whatsapp_url, '_blank');
-      
-      // Eliminar mensaje de la base de datos (ya que se envió)
       await whatsappMessageService.delete(message.id);
-      
-      // Actualizar la lista local
       setMessages(prev => prev.filter(m => m.id !== message.id));
-      
-      console.log(`✅ Mensaje enviado y eliminado: ${message.client_name}`);
     } catch (error) {
-      console.error('❌ Error enviando mensaje:', error);
+      console.error('Error enviando mensaje:', error);
     }
   };
 
   const sendAllPending = async () => {
     try {
-      console.log(`📱 Enviando ${messages.length} mensajes pendientes...`);
-      
       // Abrir todas las URLs de WhatsApp
       messages.forEach((message, index) => {
         setTimeout(() => {
           window.open(message.whatsapp_url, `_blank_${message.id}`);
-        }, index * 200); // Delay para evitar bloqueo del navegador
+        }, index * 200);
       });
       
       // Eliminar todos los mensajes de la base de datos
@@ -84,10 +71,8 @@ export function WhatsAppProvider({ children }: { children: React.ReactNode }) {
       
       // Limpiar la lista local
       setMessages([]);
-      
-      console.log(`✅ ${messageIds.length} mensajes enviados y eliminados`);
     } catch (error) {
-      console.error('❌ Error enviando mensajes:', error);
+      console.error('Error enviando mensajes:', error);
     }
   };
 

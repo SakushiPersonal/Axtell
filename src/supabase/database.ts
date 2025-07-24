@@ -487,31 +487,24 @@ export const analyticsService = {
 export const whatsappMessageService = {
   async getAll() {
     try {
-      console.log('📱 whatsappMessageService.getAll - Iniciando...');
-      
       const { data, error } = await supabase
         .from('whatsapp_messages')
         .select('*')
         .order('created_at', { ascending: false });
       
       if (error) {
-        console.error('❌ Error de Supabase:', error);
         throw error;
       }
       
-      console.log(`✅ whatsappMessageService.getAll - ${data?.length || 0} mensajes obtenidos`);
       return (data || []).map(whatsappMessageDBToWhatsAppMessage);
       
     } catch (error) {
-      console.error('❌ whatsappMessageService.getAll - Error:', error);
       throw new Error(`Error al obtener mensajes WhatsApp: ${error instanceof Error ? error.message : 'Error desconocido'}`);
     }
   },
 
   async create(messageData: WhatsAppMessageInsert) {
     try {
-      console.log('📱 whatsappMessageService.create - Iniciando...', messageData);
-      
       const { data, error } = await supabase
         .from('whatsapp_messages')
         .insert([messageData])
@@ -519,7 +512,6 @@ export const whatsappMessageService = {
         .single();
       
       if (error) {
-        console.error('❌ Error de Supabase:', error);
         throw error;
       }
       
@@ -527,19 +519,15 @@ export const whatsappMessageService = {
         throw new Error('No se pudo crear el mensaje - sin datos retornados');
       }
       
-      console.log('✅ whatsappMessageService.create - Resultado:', data);
       return whatsappMessageDBToWhatsAppMessage(data);
       
     } catch (error) {
-      console.error('❌ whatsappMessageService.create - Error:', error);
       throw new Error(`Error al crear mensaje WhatsApp: ${error instanceof Error ? error.message : 'Error desconocido'}`);
     }
   },
 
   async createMany(messagesData: WhatsAppMessageInsert[]) {
     try {
-      console.log('📱 whatsappMessageService.createMany - Iniciando...', `${messagesData.length} mensajes`);
-      
       if (messagesData.length === 0) {
         return [];
       }
@@ -550,23 +538,18 @@ export const whatsappMessageService = {
         .select();
       
       if (error) {
-        console.error('❌ Error de Supabase:', error);
         throw error;
       }
       
-      console.log(`✅ whatsappMessageService.createMany - ${data?.length || 0} mensajes creados`);
       return (data || []).map(whatsappMessageDBToWhatsAppMessage);
       
     } catch (error) {
-      console.error('❌ whatsappMessageService.createMany - Error:', error);
       throw new Error(`Error al crear mensajes WhatsApp: ${error instanceof Error ? error.message : 'Error desconocido'}`);
     }
   },
 
   async delete(id: string) {
     try {
-      console.log('📱 whatsappMessageService.delete - Iniciando...', id);
-      
       if (!id || typeof id !== 'string') {
         throw new Error('ID de mensaje inválido');
       }
@@ -577,22 +560,16 @@ export const whatsappMessageService = {
         .eq('id', id);
       
       if (error) {
-        console.error('❌ Error de Supabase:', error);
         throw error;
       }
       
-      console.log('✅ whatsappMessageService.delete - Mensaje eliminado:', id);
-      
     } catch (error) {
-      console.error('❌ whatsappMessageService.delete - Error:', error);
       throw new Error(`Error al eliminar mensaje WhatsApp: ${error instanceof Error ? error.message : 'Error desconocido'}`);
     }
   },
 
   async deleteMany(ids: string[]) {
     try {
-      console.log('📱 whatsappMessageService.deleteMany - Iniciando...', `${ids.length} mensajes`);
-      
       if (ids.length === 0) {
         return;
       }
@@ -603,36 +580,27 @@ export const whatsappMessageService = {
         .in('id', ids);
       
       if (error) {
-        console.error('❌ Error de Supabase:', error);
         throw error;
       }
       
-      console.log(`✅ whatsappMessageService.deleteMany - ${ids.length} mensajes eliminados`);
-      
     } catch (error) {
-      console.error('❌ whatsappMessageService.deleteMany - Error:', error);
       throw new Error(`Error al eliminar mensajes WhatsApp: ${error instanceof Error ? error.message : 'Error desconocido'}`);
     }
   },
 
   async getCount() {
     try {
-      console.log('📱 whatsappMessageService.getCount - Iniciando...');
-      
       const { count, error } = await supabase
         .from('whatsapp_messages')
         .select('*', { count: 'exact', head: true });
       
       if (error) {
-        console.error('❌ Error de Supabase:', error);
         throw error;
       }
       
-      console.log(`✅ whatsappMessageService.getCount - ${count || 0} mensajes pendientes`);
       return count || 0;
       
     } catch (error) {
-      console.error('❌ whatsappMessageService.getCount - Error:', error);
       throw new Error(`Error al contar mensajes WhatsApp: ${error instanceof Error ? error.message : 'Error desconocido'}`);
     }
   }

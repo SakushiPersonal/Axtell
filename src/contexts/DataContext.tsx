@@ -83,19 +83,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   // Hook de autenticación
   const { createUserAsAdmin, user } = useAuth();
 
-  // 🚀 CARGA AUTOMÁTICA INICIAL DE DATOS
+  // Carga automática inicial de datos
   useEffect(() => {
     const loadInitialData = async () => {
-      // No cargar datos si no hay conexión de autenticación establecida
-      if (user === undefined) return; // undefined = aún cargando auth
-      
-      console.log('🚀 DataContext: Iniciando carga automática de datos...');
-      console.log('👤 Usuario actual:', user ? `${user.name} (${user.role})` : 'Anónimo');
+      if (user === undefined) return;
 
       try {
         // Para TODOS los usuarios (incluidos anónimos), cargar propiedades
         if (properties.length === 0 && !loadingProperties) {
-          console.log('🏠 Cargando propiedades automáticamente...');
           await refreshProperties();
         }
 
@@ -104,53 +99,43 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           // Para administradores y vendedores, cargar todo
           if (user.role === 'admin' || user.role === 'vendedor') {
             if (clients.length === 0 && !loadingClients) {
-              console.log('👥 Cargando clientes automáticamente...');
               await refreshClients();
             }
             
             if (visits.length === 0 && !loadingVisits) {
-              console.log('📅 Cargando visitas automáticamente...');
               await refreshVisits();
             }
             
             if (users.length === 0 && !loadingUsers && user.role === 'admin') {
-              console.log('👤 Cargando usuarios automáticamente...');
               await refreshUsers();
             }
           }
           
           // Para captadores, solo propiedades y sus propios datos
           if (user.role === 'captador') {
-            // Los captadores pueden ver algunas métricas básicas
             if (!analytics && !loadingAnalytics) {
-              console.log('📊 Cargando analytics básicos...');
               await refreshAnalytics();
             }
           }
         }
-
-        console.log('✅ Carga automática de datos completada');
       } catch (error) {
-        console.error('❌ Error en carga automática de datos:', error);
+        console.error('Error en carga automática de datos:', error);
       }
     };
 
     loadInitialData();
-  }, [user]); // Ejecutar cuando el usuario cambie
+  }, [user]);
 
-  // 🔄 ACTUALIZACIÓN PERIÓDICA DE PROPIEDADES (para usuarios anónimos)
+  // Actualización periódica de propiedades
   useEffect(() => {
     let interval: NodeJS.Timeout;
     
-    // Solo para usuarios no autenticados o con rol público
     if (user === null || user?.role === 'captador') {
-      // Actualizar propiedades cada 5 minutos para mantener datos frescos
       interval = setInterval(async () => {
         if (!loadingProperties) {
-          console.log('🔄 Actualizando propiedades automáticamente...');
           await refreshProperties();
         }
-      }, 5 * 60 * 1000); // 5 minutos
+      }, 5 * 60 * 1000);
     }
 
     return () => {
@@ -299,31 +284,21 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       
       setProperties(prev => [newProperty, ...prev]);
 
-      // 📱 GENERAR MENSAJES DE WHATSAPP EN BASE DE DATOS
+      // Generar mensajes de WhatsApp automáticamente
       try {
-        console.log('📱 Generando mensajes de WhatsApp para nueva propiedad...');
-        
         if (clients.length > 0) {
           const messageData = whatsappService.generateMessagesForProperty(
             newProperty, 
             clients, 
-            user?.id // Pasar el ID del usuario que creó la propiedad
+            user?.id
           );
           
           if (messageData.length > 0) {
-            // Guardar mensajes en la base de datos
             await whatsappMessageService.createMany(messageData);
-            
-            console.log(`✅ ${messageData.length} mensajes de WhatsApp guardados en la base de datos`);
-          } else {
-            console.log('ℹ️ No se encontraron clientes con criterios coincidentes');
           }
-        } else {
-          console.log('ℹ️ No hay clientes registrados para notificar');
         }
       } catch (whatsappError) {
-        console.error('❌ Error generando mensajes de WhatsApp:', whatsappError);
-        // No fallar la creación de la propiedad por errores de WhatsApp
+        console.error('Error generando mensajes de WhatsApp:', whatsappError);
       }
       
       return newProperty;
@@ -430,7 +405,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       
       console.log('✅ Cliente actualizado exitosamente con nueva estructura');
     } catch (error) {
-      console.error('❌ Error al actualizar cliente:', error);
+      console.error('Error al actualizar cliente:', error);
       throw error;
     }
   };
@@ -480,19 +455,12 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       if (visitData.message !== undefined) updateData.message = visitData.message;
       if (visitData.vendedorId !== undefined) updateData.vendedor_id = visitData.vendedorId;
 
-      console.log('🔧 Datos a actualizar en BD:', updateData);
-
-      const updatedVisit = await visitService.update(id, updateData);
-      console.log('✅ Visita actualizada en BD:', updatedVisit);
-      
+            const updatedVisit = await visitService.update(id, updateData);
       const convertedVisit = visitDBToVisit(updatedVisit);
-      console.log('🔄 Visita convertida:', convertedVisit);
-      
       setVisits(prev => prev.map(v => v.id === id ? convertedVisit : v));
-      console.log('✅ Estado local actualizado');
       
     } catch (error) {
-      console.error('❌ Error detallado al actualizar visita:', error);
+      console.error('Error detallado al actualizar visita:', error);
       throw error;
     }
   };

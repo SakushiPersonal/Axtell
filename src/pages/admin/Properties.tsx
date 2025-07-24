@@ -58,10 +58,8 @@ export default function AdminProperties() {
     return <div>Cargando...</div>;
   }
 
-  // Filter properties based on user role
-  const userProperties = user.role === 'captador' 
-    ? properties.filter(p => p.captadorId === user.id)
-    : properties;
+  // Todos los usuarios ven todas las propiedades
+  const userProperties = properties;
 
   // Apply search and filters
   const filteredProperties = userProperties.filter(property => {
@@ -82,9 +80,9 @@ export default function AdminProperties() {
       bedrooms: formData.bedrooms ? parseInt(formData.bedrooms) : undefined,
       bathrooms: formData.bathrooms ? parseInt(formData.bathrooms) : undefined,
       area: parseInt(formData.area),
-      images: formData.media.filter(m => m.type === 'image').map(m => m.url), // Compatibilidad
-      media: formData.media, // NUEVO: Sistema de media
-      features: formData.features.filter(feature => feature.trim() !== ''),
+              images: formData.media.filter(m => m.type === 'image').map(m => m.url),
+        media: formData.media,
+        features: formData.features.filter(feature => feature.trim() !== ''),
       captadorId: user.id
     };
 
@@ -109,9 +107,9 @@ export default function AdminProperties() {
       area: '',
       location: '',
       address: '',
-      images: [], // DEPRECATED
-      media: [], // NUEVO
-      features: [''],
+              images: [],
+        media: [],
+        features: [''],
       status: 'available'
     });
     setEditingProperty(null);
