@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Supabase Connection</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>🔧 Test de Conexión Supabase</h1>
+    
+    <div>
+        <label>Supabase URL:</label>
+        <input type="text" id="url" placeholder="https://xxxxx.supabase.co" style="width: 300px;">
+    </div>
+    
+    <div style="margin-top: 10px;">
+        <label>Anon Key:</label>
+        <input type="text" id="key" placeholder="eyJhbGciOiJ..." style="width: 300px;">
+    </div>
+    
+    <div style="margin-top: 10px;">
+        <button onclick="testConnection()">🧪 Probar Conexión</button>
+    </div>
+    
+    <div style="margin-top: 10px;">
+        <label>Email:</label>
+        <input type="email" id="email" value="admin@axtell.com" style="width: 200px;">
+    </div>
+    
+    <div style="margin-top: 10px;">
+        <label>Password:</label>
+        <input type="password" id="password" value="admin123" style="width: 200px;">
+    </div>
+    
+    <div style="margin-top: 10px;">
+        <button onclick="testLogin()">🔐 Probar Login</button>
+    </div>
+    
+    <div id="result" style="margin-top: 20px; padding: 10px; background: #f5f5f5; white-space: pre-wrap;"></div>
+
+    <script>
+        let supabase;
+        
+        function log(message) {
+            const result = document.getElementById('result');
+            result.textContent += new Date().toLocaleTimeString() + ': ' + message + '\n';
+            console.log(message);
+        }
+        
+        function testConnection() {
+            const url = document.getElementById('url').value;
+            const key = document.getElementById('key').value;
+            
+            if (!url || !key) {
+                log('❌ Por favor ingresa URL y Key');
+                return;
+            }
+            
+            try {
+                supabase = window.supabase.createClient(url, key);
+                log('✅ Cliente Supabase creado');
+                
+                // Test básico
+                supabase.auth.getSession()
+                    .then(result => {
+                        log('✅ Conexión exitosa: ' + JSON.stringify(result, null, 2));
+                    })
+                    .catch(error => {
+                        log('❌ Error de conexión: ' + JSON.stringify(error, null, 2));
+                    });
+                    
+            } catch (error) {
+                log('❌ Error creando cliente: ' + error.message);
+            }
+        }
+        
+        function testLogin() {
+            if (!supabase) {
+                log('❌ Primero prueba la conexión');
+                return;
+            }
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            log('🔐 Intentando login con: ' + email);
+            
+            supabase.auth.signInWithPassword({ email, password })
+                .then(result => {
+                    log('✅ Login exitoso: ' + JSON.stringify(result, null, 2));
+                })
+                .catch(error => {
+                    log('❌ Error en login: ' + JSON.stringify(error, null, 2));
+                });
+        }
+        
+        // Auto-llenar si hay localStorage
+        const savedUrl = localStorage.getItem('supabase_url');
+        const savedKey = localStorage.getItem('supabase_key');
+        if (savedUrl) document.getElementById('url').value = savedUrl;
+        if (savedKey) document.getElementById('key').value = savedKey;
+        
+        // Guardar en localStorage
+        document.getElementById('url').addEventListener('input', (e) => {
+            localStorage.setItem('supabase_url', e.target.value);
+        });
+        
+        document.getElementById('key').addEventListener('input', (e) => {
+            localStorage.setItem('supabase_key', e.target.value);
+        });
+    </script>
+</body>
+</html> 
